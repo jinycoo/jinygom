@@ -1,0 +1,18 @@
+adapter: mysql
+db:
+  db_name:
+    openConns: 20
+    idleConns: 20
+    master:
+      dsn:
+      username: root
+      password: root
+      protocol: tcp
+      addr:
+      host: 127.0.0.1
+      port: 3306
+      params:
+        charset: utf8mb4
+        allowOldPasswords: 1
+        loc: Local
+    slaves:

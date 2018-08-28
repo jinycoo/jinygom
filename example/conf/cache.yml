@@ -1,0 +1,12 @@
+redis:
+  cluster: sentinel  # 单机模式 留空或standalone  哨兵模式 sentinel
+  master:
+    protocol:
+    host: mastername
+    port:
+    password: masterpassword
+    db: 0
+  sentinel:
+    - 192.168.0.100:26379
+    - 192.168.0.101:26379
+    - 192.168.0.102:26379

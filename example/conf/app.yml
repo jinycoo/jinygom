@@ -1,0 +1,35 @@
+# 应用名称
+appName: jiny
+#appPath:
+#confPath:
+# 运行模式 测试  开发  发布
+runMode: debug
+# Web配置
+#host: 0.0.0.0
+#port: 80
+port: 8088
+components:
+  db: database
+  cache: cache
+log:
+  dev: false
+  level: info
+  encoding: json  #console
+  key:
+    name: logger
+    time: ts
+    level: level
+    caller: caller
+    message: msg
+    stacktrace: stacktrace
+  encode:
+    time: unix
+    level:
+    duration:
+    caller: short
+  outputs:
+    - stderr
+    #- file
+  path:
+  file:  #/var/logs/jiny/log
+  format: 2006-01-02
