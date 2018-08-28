@@ -2,7 +2,7 @@
 
 JinyGo API Web Framework
 
-## codis版本
+## 版本
 0.0.1
 
 #### 使用
