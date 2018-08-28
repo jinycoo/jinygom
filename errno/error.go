@@ -5,7 +5,7 @@ var ErrCode map[int]string
 func init() {
 	ErrCode = make(map[int]string)
 	ErrCode[0] = "操作成功"
-	ErrCode[1] = "欢迎来到大道用车！"
+	ErrCode[1] = "欢迎来到JinyGo！"
 
 	ErrCode[200] = "请求成功"
 	ErrCode[404] = "请求地址不存在"
