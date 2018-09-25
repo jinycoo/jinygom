@@ -1,7 +1,6 @@
 package web
 
 import (
-	"fmt"
 	"strconv"
 	"io/ioutil"
 	"github.com/gin-gonic/gin"
@@ -29,7 +28,7 @@ type OldApiResponse struct {
 }
 
 func (ic *InContext) QueryInt(pkey string, def int) int {
-	val := ic.Ctx.DefaultQuery(pkey, "0")
+	val := ic.Ctx.DefaultQuery(pkey, strconv.Itoa(def))
 	queryKey, err := strconv.Atoi(val)
 	if err != nil {
 		return def
@@ -58,7 +57,6 @@ func (ic *InContext) ParamsString(pname, def string) string {
 }
 func (ic *InContext) JsonPost() map[string]interface{} {
 	body := ic.Ctx.Request.Body
-	fmt.Println(body)
 	var params map[string]interface{}
 	var bodyBytes []byte
 	if body != nil {

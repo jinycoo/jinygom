@@ -10,7 +10,7 @@ import (
 
 const (
 	AppName    = "jinygo"
-	AppVersion = "0.0.1"
+	AppVersion = "1.0.0"
 
 	Port = 8080
 	ConfigDir      = "conf"
@@ -22,14 +22,10 @@ const (
 
 func (jiny *Jinygo) getModConfigFile(name string) string {
 	var file string
-	if name != "" {
-		if mod,ok := jiny.config.Components[name]; ok {
-			filename := fmt.Sprintf("%s.%s", mod, ConfigFileType)
-			file = filepath.Join(jiny.configPath, filename)
-			if _, err := os.Stat(file); err != nil {
-				return file
-			}
-		}
+	filename := fmt.Sprintf("%s.%s", name, ConfigFileType)
+	file = filepath.Join(jiny.configPath, filename)
+	if _, err := os.Stat(file); err != nil {
+		return file
 	}
 	return file
 }

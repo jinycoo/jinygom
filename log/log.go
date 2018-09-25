@@ -4,12 +4,12 @@ import (
 	"os"
 	"fmt"
 	"time"
+	"net/url"
 	"runtime"
 	"path/filepath"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"github.com/jinygo/utils"
-	"reflect"
 )
 
 const (
@@ -20,7 +20,10 @@ const (
 	Stderr  = "stderr"
 	File    = "file"
 	Console = "console"
+
+	FileSink = "wf"
 )
+
 
 var (
 	JLog *JLogger
@@ -54,7 +57,7 @@ func DevConfig() *JLogConfig {
 		Dev:      true,
 		Level:    LevelDebug,
 		Encoding: Console,
-		Encode:   map[string]string{"time": "", "level": "capital", "duration": "string", "caller": "short"},
+		Encode:   map[string]string{"time": "", "level": "capital", "duration": "", "caller": "short"},
 		Key:      map[string]string{
 			"name": "logger",
 			"time": "time",
@@ -107,15 +110,21 @@ func initJLog(logConf *JLogConfig) {
 	var outputs []string
 	for _, p := range logConf.OutPuts {
 		if p == File {
+			zap.RegisterSink(FileSink, func(u *url.URL) (zap.Sink, error) {
+				return os.OpenFile(u.Path[1:], os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+			})
 			filename := fmt.Sprintf("%s_%s.log", logConf.LogFile, time.Now().Format(logConf.Format))
-			logFile := filepath.Join(logConf.LogPath, filename)
+			logFile := fmt.Sprintf("%s:///%s", FileSink, filepath.Join(logConf.LogPath, filename))
 			outputs = append(outputs, logFile)
 		} else {
 			outputs = append(outputs, p)
 		}
 	}
 
-	sink, _, _ := zap.Open(outputs...)
+	sink, close, err := zap.Open(outputs...)
+	if err != nil {
+		close()
+	}
 
 	var cores []zapcore.Core
 	switch logConf.Encoding {
@@ -133,7 +142,7 @@ func initJLog(logConf *JLogConfig) {
 	//}
 
 	JLog = &JLogger{
-		name:       "jiny-log",
+		name:        logConf.LogFile,
 		core:        zapcore.NewTee(cores...),
 		development: logConf.Dev,
 		errorOutput: zapcore.Lock(os.Stderr),
@@ -254,15 +263,13 @@ func Info(details ...interface{}) {
 		ce.Write()
 	}
 }
-func CInfo(details ...interface{}) {
-	if len(details) > 2 {
-		if ce := JLog.check(zapcore.InfoLevel, details[0].(string)); ce != nil {
-			if reflect.TypeOf(details[1]).String() == "map[string]interface {}" {
-				ce.Write(genFields(details[1].(map[string]interface{}))...)
-			}
+func CInfo(msg string, fields map[string]interface{}) {
+	if len(fields) > 0 {
+		if ce := JLog.check(zapcore.InfoLevel, msg); ce != nil {
+			ce.Write(genFields(fields)...)
 		}
 	} else {
-		Info(details...)
+		Info(msg)
 	}
 }
 func Warn(details ...interface{}) {
@@ -301,8 +308,8 @@ func Sync() error {
 	return JLog.core.Sync()
 }
 
-func genFields(details map[string]interface{}) []zap.Field {
-	var fields = make([]zap.Field, 0)
+func genFields(details map[string]interface{}) []zapcore.Field {
+	var fields = make([]zapcore.Field, 0)
 	for k, v := range details {
 		switch v.(type) {
 		case bool:

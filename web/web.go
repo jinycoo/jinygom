@@ -4,7 +4,6 @@ import (
 	"time"
 	"strings"
 	"github.com/gin-gonic/gin"
-	"github.com/json-iterator/go"
 	"github.com/jinygo/log"
 	"github.com/jinygo/constants"
 )
@@ -35,11 +34,11 @@ func Run(runMode, addr string) {
 func incLogger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req  = make(map[string]interface{}, 0)
-		req["start"] = time.Now().Unix()
+		reqStart := time.Now().Unix()
 		req["action"] = c.Request.URL.Path
 		req["method"] = c.Request.Method
 		req["query"] = strings.Split(c.Request.URL.RawQuery, "&")
-		req["clientIP"] = c.ClientIP()
+		req["client_ip"] = c.ClientIP()
 		//body := c.Request.Body
 		//var bodyBytes []byte
 		//if body != nil {
@@ -48,13 +47,12 @@ func incLogger() gin.HandlerFunc {
 		//	jsoniter.Unmarshal(bodyBytes, &params)
 		//	req["params"] = params
 		//}
-		b,_ := jsoniter.Marshal(req)
-		log.Info(string(b))
+		//b,_ := jsoniter.Marshal(req)
+		//log.Info(string(b))
 		c.Next()
-		var res  = make(map[string]interface{}, 0)
-		res["end"] = time.Now().Unix()
-		res["status"] = c.Writer.Status()
-		b2,_ := jsoniter.Marshal(res)
-		log.Info(string(b2))
+		//var res  = make(map[string]interface{}, 0)
+		req["requested_time"] = time.Now().Unix() - reqStart
+		req["status"] = c.Writer.Status()
+		log.CInfo("Api request info", req)
 	}
 }

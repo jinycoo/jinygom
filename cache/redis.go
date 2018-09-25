@@ -8,10 +8,10 @@ import (
 
 var (
 	RCache *redis.Client
-	redisCfg *redisConfig
+	redisCfg *RedisConfig
 )
 
-type redisMaster struct {
+type RedisMaster struct {
 	Protocol  string  `yaml:"protocol"`
 	Host      string  `yaml:"host"`
 	Port      string  `yaml:"port"`
@@ -19,9 +19,9 @@ type redisMaster struct {
 	Db        int     `yaml:"db"`
 }
 
-type redisConfig struct {
+type RedisConfig struct {
 	Cluster    string        `yaml:"cluster"`
-	Master     *redisMaster  `yaml:"master"`
+	Master     *RedisMaster  `yaml:"master"`
 	Sentinel   []string      `yaml:"sentinel"`
 }
 

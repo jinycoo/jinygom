@@ -11,10 +11,10 @@ const (
 	Mongo = "mongo"
 )
 
-var cacheCfg *caches
+var cacheCfg *CheConfig
 
-type caches struct {
-	Redis  *redisConfig  `yaml:"redis"`
+type CheConfig struct {
+	Redis  *RedisConfig  `yaml:"redis"`
 	Mongo  *mongoConfig  `yaml:"mongo"`
 }
 
@@ -29,6 +29,17 @@ func Init(cfgFile string) {
 	}
 	redisCfg = cacheCfg.Redis
 	mongoCfg = cacheCfg.Mongo
+	if redisCfg != nil {
+		redisConn(redisCfg.Cluster)
+	}
+	if mongoCfg != nil {
+		mongoConn("")
+	}
+}
+
+func InitCache(cfg *CheConfig) {
+	redisCfg = cfg.Redis
+	mongoCfg = cfg.Mongo
 	if redisCfg != nil {
 		redisConn(redisCfg.Cluster)
 	}

@@ -1,9 +1,7 @@
-# JinyGo 使用文档
-
-JinyGo API Web Framework
+# 使用文档
 
 ## 版本
-0.0.1
+1.0.0
 
 #### 使用
 
@@ -17,12 +15,12 @@ import (
 )
 
 func main() {
-	jiny := jinygo.New()
-	v1 := jiny.RGroup("v1")
+	jg := jinygo.New()
+	v1 := jg.RGroup("v1")
 	{
 		v1.Get("index", Index)
 	}
-	jiny.Run()
+	jg.Run()
 }
 
 func Index(c *gin.Context) {
@@ -38,17 +36,18 @@ func Index(c *gin.Context) {
 
 如不适用默认配置路径，操作如下：
 ```bash
-$ export CONFIG_PATH=/data/app/jiny
+$ export CONFIG_PATH=/etc/jinygo/conf
 
-jiny := jinygo.New()
-jiny.SetEnvPrefix("jiny")
+// 添加ENV prefix  （推荐）
+jg := jinygo.New()
+jg.SetEnvPrefix("jg")
 ...
 
 or
 
-$ export JINY_CONFIG_PATH=/data/app/jiny
+$ export JG_CONFIG_PATH=/etc/jinygo/conf
 
 ```
 
-jiny文件夹下必须有名为app.yml的配置文件，具体配置参照example/conf/app.yml
+conf文件夹下必须有名为app.yml的配置文件
 

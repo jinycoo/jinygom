@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"time"
 	"strings"
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
@@ -16,13 +17,14 @@ var (
 )
 
 type dbGroupConfig struct {
-	OpenConns  int `yaml:"openConns"`
-	IdleConns  int `yaml:"idleConns"`
-	Master     *engineConfig `yaml:"master`
-	Slaves     []string `yaml:"slaves"`
+	OpenConns       int          `yaml:"openConns"`
+	IdleConns       int          `yaml:"idleConns"`
+	ConnMaxLifetime int           `yaml:"maxLifetime"`
+	Master          *engineConfig `yaml:"master`
+	Slaves          []string      `yaml:"slaves"`
 }
 type dbConfig struct {
-	Adapter string `yaml:"adapter"`
+	Adapter string                      `yaml:"adapter"`
 	Db      map[string]*dbGroupConfig   `yaml:"db"`
 }
 type engineConfig struct {
@@ -38,6 +40,9 @@ type engineConfig struct {
 
 func initDataGroup() map[string]*xorm.EngineGroup {
 	var groups = make(map[string]*xorm.EngineGroup)
+	if dbCfg == nil {
+		log.Error("db config setting error")
+	}
 	for g, e := range dbCfg.Db {
 		dataSourceSlice := make([]string, 0)
 		dataSourceSlice = append(dataSourceSlice, e.Master.parseDns(g))
@@ -51,6 +56,7 @@ func initDataGroup() map[string]*xorm.EngineGroup {
 			}
 			group.SetMaxOpenConns(dbCfg.Db[g].OpenConns)
 			group.SetMaxIdleConns(dbCfg.Db[g].IdleConns)
+			group.SetConnMaxLifetime(time.Duration(dbCfg.Db[g].ConnMaxLifetime) * time.Second)
 			groups[g] = group
 			log.Info(fmt.Sprintf("%s EngineGroup Opened", g))
 		}

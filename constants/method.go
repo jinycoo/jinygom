@@ -16,6 +16,7 @@ const (
 
 	ConfigFileDB = "db"
 	ConfigFileCache = "cache"
-
+	ConfigFileParams = "params"
+	ConfigFileMQ = "mqueue"
 	Separator = "/"
 )
