@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"runtime"
 	"github.com/gin-gonic/gin"
-	"github.com/jinygo/utils"
-	"github.com/jinygo/constants"
+	"github.com/jinycoo/jinygo/utils"
+	"github.com/jinycoo/jinygo/constants"
 )
 
 var (

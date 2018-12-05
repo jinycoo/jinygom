@@ -4,8 +4,8 @@ import (
 	"time"
 	"strings"
 	"github.com/gin-gonic/gin"
-	"github.com/jinygo/log"
-	"github.com/jinygo/constants"
+	"github.com/jinycoo/jinygo/log"
+	"github.com/jinycoo/jinygo/constants"
 )
 
 func Run(runMode, addr string) {

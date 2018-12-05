@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"github.com/streadway/amqp"
 
-	"github.com/jinygo/log"
+	"github.com/jinycoo/jinygo/log"
 )
 
 const (

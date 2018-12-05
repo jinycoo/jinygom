@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/jinygo"
-	"github.com/jinygo/log"
+	"github.com/jinycoo/jinygo"
+	"github.com/jinycoo/jinygo/log"
 	"github.com/gin-gonic/gin"
 )
 

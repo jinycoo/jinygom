@@ -8,7 +8,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"github.com/go-xorm/xorm"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinygo/log"
+	"github.com/jinycoo/jinygo/log"
 )
 
 var (

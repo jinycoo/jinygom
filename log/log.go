@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"github.com/jinygo/utils"
+	"github.com/jinycoo/jinygo/utils"
 )
 
 const (

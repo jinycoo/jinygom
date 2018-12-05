@@ -3,7 +3,7 @@ package cache
 import (
 	"net"
 	"github.com/go-redis/redis"
-	"github.com/jinygo/log"
+	"github.com/jinycoo/jinygo/log"
 )
 
 var (

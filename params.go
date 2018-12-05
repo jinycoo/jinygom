@@ -3,7 +3,7 @@ package jinygo
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
-	"github.com/jinygo/log"
+	"github.com/jinycoo/jinygo/log"
 	"strings"
 	"reflect"
 	"strconv"

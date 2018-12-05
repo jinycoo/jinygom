@@ -2,9 +2,9 @@ package jinygo
 
 import (
 	"os"
-	"github.com/jinygo/log"
-	"github.com/jinygo/utils"
-	"github.com/jinygo/constants"
+	"github.com/jinycoo/jinygo/log"
+	"github.com/jinycoo/jinygo/utils"
+	"github.com/jinycoo/jinygo/constants"
 )
 
 var (

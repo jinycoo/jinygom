@@ -6,12 +6,12 @@ import (
 	"path"
 	"strings"
 	"strconv"
-	"github.com/jinygo/db"
-	"github.com/jinygo/web"
-	"github.com/jinygo/log"
-	"github.com/jinygo/cache"
-	"github.com/jinygo/mqueue"
-	"github.com/jinygo/constants"
+	"github.com/jinycoo/jinygo/db"
+	"github.com/jinycoo/jinygo/web"
+	"github.com/jinycoo/jinygo/log"
+	"github.com/jinycoo/jinygo/cache"
+	"github.com/jinycoo/jinygo/mqueue"
+	"github.com/jinycoo/jinygo/constants"
 )
 
 type Jinygo struct {

@@ -1,7 +1,7 @@
 package mqueue
 
 import (
-	"github.com/jinygo/utils"
+	"github.com/jinycoo/jinygo/utils"
 	"github.com/streadway/amqp"
 )
 

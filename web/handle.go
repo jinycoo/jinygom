@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"github.com/gin-gonic/gin"
 	"github.com/json-iterator/go"
-	"github.com/jinygo/log"
-	"github.com/jinygo/errno"
+	"github.com/jinycoo/jinygo/log"
+	"github.com/jinycoo/jinygo/errno"
 )
 
 type InContext struct {
